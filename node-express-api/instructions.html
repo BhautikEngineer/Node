@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node.js and Express API Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 20px;
+    }
+    ol, ul {
+      margin-left: 20px;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 5px;
+    }
+    code {
+      font-family: "Courier New", monospace;
+      color: #d4372a;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Create a Basic REST API using Node.js and Express</h2>
+
+<p>This example will demonstrate how to set up routes, handle HTTP requests, and send JSON responses.</p>
+
+<ol>
+  <li>Create a new directory for your project and navigate into it:</li>
+  <pre><code>mkdir node-express-api
+cd node-express-api</code></pre>
+
+  <li>Initialize a Node.js project and install the required dependencies:</li>
+  <pre><code>npm init -y
+npm install express</code></pre>
+
+  <li>Create an <code>app.js</code> file with the following content:</li>
+  <pre><code>&lt;script type="text/javascript"&gt;
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Sample data
+const products = [
+  { id: 1, name: 'Product 1' },
+  { id: 2, name: 'Product 2' },
+];
+
+// Middleware to parse JSON requests
+app.use(express.json());
+
+// Route to get all products
+app.get('/products', (req, res) =&gt; {
+  res.json(products);
+});
+
+// Route to get a specific product by ID
+app.get('/products/:id', (req, res) =&gt; {
+  const id = parseInt(req.params.id);
+  const product = products.find(p =&gt; p.id === id);
+  
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).json({ error: 'Product not found' });
+  }
+});
+
+// Start the server
+app.listen(port, () =&gt; {
+  console.log(`Server is listening on port ${port}`);
+});
+&lt;/script&gt;</code></pre>
+
+  <li>Run the Express app:</li>
+  <pre><code>node app.js</code></pre>
+
+  <li>Open your web browser or use a tool like cURL to test the API:</li>
+  <ul>
+    <li>Get all products:
+      <pre><code>http://localhost:3000/products</code></pre>
+    </li>
+    <li>Get a specific product by ID (replace <code>:id</code> with an actual product ID):
+      <pre><code>http://localhost:3000/products/:id</code></pre>
+    </li>
+  </ul>
+</ol>
+
+<p>In this example, we created an Express app with two routes: one to get all products and another to get a specific product by its ID. The app uses middleware to parse JSON requests, and it sends JSON responses containing the product data.</p>
+
+<p>Remember that this is a basic example to introduce you to building APIs with Express. In real-world applications, you would likely connect to a database, add authentication, and handle more complex scenarios.</p>
+
+</body>
+</html>
